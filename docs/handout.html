@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SDC26 Wireless Hacking - Participant Handout</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #101418;
+      --muted: #50606f;
+      --line: #cdd6df;
+      --panel: #f5f8fb;
+      --green: #0f9d58;
+      --cyan: #0b6fa4;
+      --yellow: #b7791f;
+      --red: #c53030;
+      --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+      --ui: Inter, system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--ui);
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.35;
+    }
+
+    .page {
+      width: 420mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 10mm 11mm;
+      display: flex;
+      flex-direction: column;
+      gap: 5mm;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: 22pt;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: 11pt;
+      margin-bottom: 1.5mm;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 9.5pt;
+      margin-bottom: 1mm;
+    }
+
+    p, li, td, th {
+      font-size: 8pt;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 8pt;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 5mm;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 5mm;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-top: 2mm;
+      max-width: 44ch;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2mm 4mm;
+      padding: 3mm;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .meta div {
+      font-size: 7.8pt;
+    }
+
+    .mono {
+      font-family: var(--mono);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 3mm;
+    }
+
+    .panel.soft {
+      background: var(--panel);
+    }
+
+    .panel.warn {
+      border-left: 3px solid var(--yellow);
+      background: #fffaf1;
+    }
+
+    .mini {
+      font-size: 7.3pt;
+      color: var(--muted);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 4mm;
+    }
+
+    li + li {
+      margin-top: 0.9mm;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 1.2mm 1.6mm;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      font-family: var(--mono);
+      font-size: 7pt;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: #f8fbfd;
+    }
+
+    pre {
+      margin: 0;
+      padding: 2.3mm;
+      overflow: hidden;
+      background: #0f1720;
+      color: #edf2f7;
+      border: 1px solid #2a3642;
+      font-family: var(--mono);
+      font-size: 7pt;
+      line-height: 1.32;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      padding: 2.6mm;
+      background: #fff;
+    }
+
+    .step-num {
+      display: inline-block;
+      width: 5mm;
+      height: 5mm;
+      border: 1px solid #9fd7bd;
+      color: var(--green);
+      text-align: center;
+      line-height: 4.4mm;
+      font-family: var(--mono);
+      font-size: 7.8pt;
+      margin-bottom: 1.3mm;
+    }
+
+    .wiring-diagram {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 3mm;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3mm 5mm;
+      margin-top: 2.5mm;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5mm;
+      font-size: 8pt;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 3mm;
+      height: 3mm;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .foot {
+      margin-top: auto;
+      border-top: 1px solid var(--line);
+      padding-top: 2mm;
+      display: flex;
+      justify-content: space-between;
+      gap: 4mm;
+      font-size: 7.3pt;
+      color: var(--muted);
+    }
+
+    .compact-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.05fr 0.9fr;
+      gap: 4mm;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 4mm;
+    }
+
+    @page {
+      size: A3 landscape;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">SDC26 Workshop Handout</div>
+        <h1>Radio Hacking 101<br/>433 MHz Replay Attacks</h1>
+        <p>Short reference sheet for the hands-on lab. Use it while wiring, setting up Thonny, capturing a signal, and replaying it.</p>
+      </div>
+      <div class="meta">
+        <div><strong>Slides</strong><br/><span class="mono">code-byter.com/sdc26_wireless_hacking/</span></div>
+        <div><strong>Repo</strong><br/><span class="mono">github.com/code-byter/sdc26_wireless_hacking</span></div>
+        <div><strong>Hardware</strong><br/>Pico + CC1101 + 433 MHz remote</div>
+        <div><strong>Goal</strong><br/>Capture one fixed code and replay it</div>
+      </div>
+    </div>
+
+    <div class="panel soft">
+      <h2>Workshop Flow</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Set Up</h3>
+          <p>Open Thonny, select the Pico MicroPython interpreter, and verify the board is connected.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Capture</h3>
+          <p>Run the sniffer, press the remote once, and copy the printed <span class="mono">addr</span> and <span class="mono">btn</span>.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Replay</h3>
+          <p>Insert those values into the transmit step and verify the target device responds.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+        <h2>Quick Wiring Table</h2>
+        <table>
+          <thead>
+            <tr><th>CC1101</th><th>Pico</th><th>Use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="mono">1 - GND</td><td class="mono">GND (38)</td><td>Ground</td></tr>
+            <tr><td class="mono">2 - VCC</td><td class="mono">3.3V (36)</td><td>Power</td></tr>
+            <tr><td class="mono">3 - GDO0</td><td class="mono">GP3</td><td>RX data / TX gate</td></tr>
+            <tr><td class="mono">4 - CSN</td><td class="mono">GP5</td><td>Chip select</td></tr>
+            <tr><td class="mono">5 - SCK</td><td class="mono">GP6</td><td>SPI clock</td></tr>
+            <tr><td class="mono">6 - MOSI</td><td class="mono">GP7</td><td>SPI TX</td></tr>
+            <tr><td class="mono">7 - MISO</td><td class="mono">GP4</td><td>SPI RX</td></tr>
+          </tbody>
+        </table>
+        <div class="panel warn" style="margin-top:3mm; padding:2.5mm 3mm;">
+          <h3>Important</h3>
+          <p>Use <strong>3.3V only</strong>. The CC1101 is <strong>not 5V tolerant</strong>.</p>
+        </div>
+        <div class="panel soft" style="margin-top:3mm;">
+          <h3>Thonny Setup</h3>
+          <ul>
+            <li>Install/open <span class="mono">thonny.org</span></li>
+            <li>Select <span class="mono">MicroPython (Raspberry Pi Pico)</span></li>
+            <li>Open this repo and run <span class="mono">blink.py</span> first</li>
+          </ul>
+        </div>
+    </div>
+
+    <div class="compact-grid">
+      <div class="stack">
+        <div class="panel">
+        <h2>Code Snippet 1 - Blink Test</h2>
+        <pre><code># blink.py
+from machine import Pin
+import time
+
+led = Pin(25, Pin.OUT)
+print("Hello from Pico!")
+
+while True:
+    led.toggle()
+    print("Blink!")
+    time.sleep(0.5)</code></pre>
+        <p class="mini" style="margin-top:1.8mm;">Expected result: LED blinks and Thonny prints <span class="mono">Blink!</span>.</p>
+        </div>
+
+        <div class="panel">
+          <h2>Code Snippet 3 - Replay</h2>
+          <pre><code># Step 2: Replay captured code
+DEVICE_ADDRESS = 0xBCC25  # replace with your addr
+BUTTON_1 = 0x2            # replace with your btn
+transmit(cc1101, DEVICE_ADDRESS, BUTTON_1)</code></pre>
+          <p class="mini" style="margin-top:1.8mm;">Use the values printed by the sniffer. Then run the script again.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+        <h2>Code Snippet 2 - Capture</h2>
+        <pre><code># Step 1: Sniff the signal
+result = sniff(cc1101)
+if result:
+    addr, btn, code = result
+    print(f"[RESULT] Captured code: 0x{code:06X}")
+    print(f"         Use: transmit(cc1101, 0x{addr:05X}, 0x{btn:X})")</code></pre>
+        <p class="mini" style="margin-top:1.8mm;">Press the remote <strong>once</strong> during the capture window.</p>
+        </div>
+
+        <div class="panel soft">
+          <h2>Capture Notes</h2>
+          <ul>
+            <li>Press the remote once, not repeatedly</li>
+            <li>Write down both <span class="mono">addr</span> and <span class="mono">btn</span></li>
+            <li>If it fails, bring the remote closer and try again</li>
+            <li>One clean capture is enough for replay</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel soft">
+        <h2>Quick Troubleshooting</h2>
+        <table>
+          <thead>
+            <tr><th>Problem</th><th>Try This</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>No Pico in Thonny</td><td>Check USB cable and interpreter selection</td></tr>
+            <tr><td>No capture result</td><td>Press remote closer to antenna and try again</td></tr>
+            <tr><td>Wrong values</td><td>Capture again with one clean button press</td></tr>
+            <tr><td>No replay action</td><td>Recheck wiring and copied <span class="mono">addr</span>/<span class="mono">btn</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div>Slides: <span class="mono">code-byter.com/sdc26_wireless_hacking/</span></div>
+      <div>Repo: <span class="mono">github.com/code-byter/sdc26_wireless_hacking</span></div>
+    </div>
+  </section>
+</body>
+</html>
